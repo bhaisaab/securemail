@@ -8,7 +8,7 @@ class mailserver {
         ensure => absent,
     }
 
-    $packages = [ 'postfix', 'sasl2-bin', 'libsasl2-modules' ]
+    $packages = [ 'postfix', 'sasl2-bin', 'libsasl2-modules', 'dovecot-core', 'dovecot-imapd' ]
     package { $packages: ensure => installed }
 
     service { 'postfix':
