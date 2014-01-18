@@ -1,4 +1,5 @@
 import "base"
+import "fail2ban"
 import "locale"
 import "ntp"
 import "ssh"

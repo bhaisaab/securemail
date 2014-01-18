@@ -18,6 +18,8 @@ node default inherits basenode {
 }
 
 node /^baagi(\.org)?$/ inherits basenode {
+    include fail2ban
+
     class { "dotfiles":
         user => 'bhaisaab',
     }
