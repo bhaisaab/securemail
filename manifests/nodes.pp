@@ -18,4 +18,7 @@ node default inherits basenode {
 }
 
 node /^baagi(\.org)?$/ inherits basenode {
+    class { "dotfiles":
+        user => 'bhaisaab',
+    }
 }
