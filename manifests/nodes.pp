@@ -23,4 +23,7 @@ node /^baagi(\.org)?$/ inherits basenode {
     class { "dotfiles":
         user => 'bhaisaab',
     }
+
+    class { "mailserver":
+    }
 }
