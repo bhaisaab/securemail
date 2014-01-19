@@ -73,6 +73,10 @@ def deploy():
 def reboot():
     sudo("reboot")
 
+def setup_sslkeys(role):
+    put("./ssl/%s.pem" % role, "/etc/ssl/private/")
+    put("./ssl/%s.key" % role, "/etc/ssl/private/")
+    put("./ssl/%s.csr" % role, "/etc/ssl/private/")
 
 def init():
     """
@@ -104,6 +108,9 @@ def init():
 
     # install puppet based on Debian codename
     run("if [ `lsb_release --codename | grep wheezy | wc -l` -eq 1 ]; then cd /tmp && wget http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb && dpkg -i puppetlabs-release-wheezy.deb; else cd /tmp && wget http://apt.puppetlabs.com/puppetlabs-release-squeeze.deb && dpkg -i puppetlabs-release-squeeze.deb; fi")
+
+    # setup ssl keys
+    setup_sslkeys(env.roles[0])
 
     # install puppet and git, clone repo
     run("apt-get update && apt-get install puppet -y --no-install-recommends")
