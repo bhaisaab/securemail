@@ -94,7 +94,7 @@ def init():
 
     # basic package management
     run("apt-get update && apt-get upgrade -y")
-    run("apt-get purge -y exim* sendmail* mutt procmail bind9 apache2* php5* mysql* mailagent")
+    run("apt-get remove --purge -y exim* sendmail* mutt procmail bind9 apache2* php5* mysql* mailagent")
     run("apt-get install --no-install-recommends -y vim htop sudo openssh-client ssh wget gcc build-essential python-pip git tig")
 
     # append local public key to authorized_keys

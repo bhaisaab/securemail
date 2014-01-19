@@ -83,7 +83,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         path     => "/bin:/usr/bin:/usr/local/bin",
         notify => Service["spamass-milter"],
         user     => root,
-        unless   => "cat /etc/default/spamass-milter | grep ^OPTIONS | grep r | grep m | grep I",
+        unless   => "cat /etc/default/spamass-milter | grep ^OPTIONS | grep '\-I'",
         command  => 'echo OPTIONS=\"-u spamass-milter -i 127.0.0.1 -m -r -1 -I\" > /etc/default/spamass-milter',
     }
 
@@ -115,7 +115,8 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
     service { 'opendkim':
         ensure     => running,
         enable     => true,
-        hasrestart => true,
+        hasrestart => false,
+        hasstatus  => false,
         require    => Package['opendkim'],
     }
 
