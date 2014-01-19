@@ -66,7 +66,8 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         unless   => "ls /etc/opendkim/mail.private",
         command  => "mkdir -p /etc/opendkim && cd /etc/opendkim && \
                      opendkim-genkey -r -h rsa-sha256 -d ${domain} -s mail && \
-                     chown opendkim:opendkim * && chmod u=rw,go-rwx * && cat mail.txt"
+                     chown opendkim:opendkim * && chmod u=rw,go-rwx * && cat mail.txt",
+        require => Package["opendkim"],
     }
 
     # Enable opendkim service
@@ -75,7 +76,8 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         notify => Service["opendkim"],
         user     => root,
         unless   => "cat /etc/default/opendkim | grep ^SOCKET=",
-        command  => 'echo SOCKET=\"inet:12345@localhost\" > /etc/default/opendkim'
+        command  => 'echo SOCKET=\"inet:12345@localhost\" > /etc/default/opendkim',
+        require => Package["opendkim"],
     }
 
     # Enable spamass-milter service
@@ -85,6 +87,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         user     => root,
         unless   => "cat /etc/default/spamass-milter | grep ^OPTIONS | grep '\-I'",
         command  => 'echo OPTIONS=\"-u spamass-milter -i 127.0.0.1 -m -r -1 -I\" > /etc/default/spamass-milter',
+        require => Package["spamass-milter"],
     }
 
     file { "/etc/default/spamassassin":
