@@ -48,5 +48,5 @@ inet_interfaces = all
 # Milter settings: opendkim, spamassassin
 milter_default_action = accept
 milter_protocol = 6
-smtpd_milters = inet:localhost:12345, unix:/spamass/spamass.sock
+smtpd_milters = unix:/spamass/spamass.sock, inet:localhost:12345
 non_smtpd_milters = inet:localhost:12345
