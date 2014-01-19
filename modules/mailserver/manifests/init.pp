@@ -2,6 +2,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
                  $ssl_cert='/etc/ssl/private/baagi.pem', $ssl_key='/etc/ssl/private/baagi.key') {
 
     package { [
+        'sendmail',
         'exim4',
         'exim4-base',
         'exim4-config',
