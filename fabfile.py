@@ -77,6 +77,7 @@ def setup_sslkeys(role):
     put("./ssl/%s.pem" % role, "/etc/ssl/private/")
     put("./ssl/%s.key" % role, "/etc/ssl/private/")
     put("./ssl/%s.csr" % role, "/etc/ssl/private/")
+    run("chmod 640 /etc/ssl/private/*")
 
 def init():
     """

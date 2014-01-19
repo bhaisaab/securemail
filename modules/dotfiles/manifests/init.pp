@@ -9,6 +9,6 @@ class dotfiles($user = 'bhaisaab') {
         command  => "git clone git://github.com/bhaisaab/dotfiles.git /home/${user}/.dotfiles \
                      && git clone git://github.com/robbyrussell/oh-my-zsh.git /home/${user}/.oh-my-zsh \
                      && /bin/bash /home/${user}/.dotfiles/install.sh",
-        notify => Service["$user"],
+        require => User["$user"],
     }
 }
