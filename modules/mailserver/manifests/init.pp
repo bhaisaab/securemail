@@ -63,7 +63,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
     exec { "opendkim-genkey":
         path     => "/bin:/usr/bin:/usr/local/bin",
         user     => root,
-        unless   => "ls /etc/opendkim/${domain}",
+        unless   => "ls /etc/opendkim/mail.private",
         command  => "mkdir -p /etc/opendkim && cd /etc/opendkim && \
                      opendkim-genkey -r -h rsa-sha256 -d ${domain} -s mail && \
                      chown opendkim:opendkim * && chmod u=rw,go-rwx * && cat mail.txt"
