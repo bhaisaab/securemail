@@ -104,7 +104,6 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         ensure     => running,
         enable     => true,
         hasrestart => true,
-        hasstatus  => false,
         require    => Package['postfix'],
     }
 
