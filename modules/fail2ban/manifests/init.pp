@@ -9,6 +9,8 @@ class fail2ban {
         group   => root,
         mode    => 644,
         source => "puppet:///modules/fail2ban/fail2ban-default",
+        require => Package["fail2ban"],
+        notify => Service["fail2ban"],
     }
 
     file { "/etc/fail2ban/jail.local":
@@ -17,6 +19,8 @@ class fail2ban {
         group   => root,
         mode    => 644,
         source => "puppet:///modules/fail2ban/jail.local",
+        require => Package["fail2ban"],
+        notify => Service["fail2ban"],
     }
 
     service { "fail2ban":

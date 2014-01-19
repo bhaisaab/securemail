@@ -9,13 +9,6 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         ensure => absent,
     }
 
-    exec { "root-alias-proxy":
-        path     => "/bin:/usr/bin:/usr/local/bin",
-        user     => root,
-        unless   => "cat /etc/aliases | grep root:",
-        command  => "echo root: ${user} >> /etc/aliases && newaliases",
-    }
-
     $packages = [ 'postfix', 'sasl2-bin', 'libsasl2-modules', 'dovecot-core', 'dovecot-imapd',
                   'opendkim', 'opendkim-tools', 'spamass-milter', 'spamassassin' ]
     package { $packages: ensure => installed }
@@ -28,8 +21,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         group => root,
         content => template("mailserver/postfixmain.cf.erb"),
         require => Package["postfix"],
-    }
-
+    } ->
     file { "/etc/postfix/master.cf":
         ensure => file,
         notify => Service["postfix"],
@@ -38,6 +30,12 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         group => root,
         content => template("mailserver/postfixmaster.cf.erb"),
         require => Package["postfix"],
+    } ->
+    exec { "root-alias-proxy":
+        path     => "/bin:/usr/bin:/usr/local/bin",
+        user     => root,
+        unless   => "cat /etc/aliases | grep root:",
+        command  => "echo root: ${user} >> /etc/aliases && /usr/bin/newaliases",
     }
 
     file { "/etc/dovecot/dovecot.conf":
@@ -84,7 +82,7 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         path     => "/bin:/usr/bin:/usr/local/bin",
         notify => Service["spamass-milter"],
         user     => root,
-        unless   => "cat /etc/default/spamass-milter | grep ^OPTIONS | grep '\-r \-1 \-I'",
+        unless   => "cat /etc/default/spamass-milter | grep ^OPTIONS | grep r",
         command  => 'echo OPTIONS=\"-u spamass-milter -i 127.0.0.1 -m -r -1 -I\" > /etc/default/spamass-milter',
     }
 
