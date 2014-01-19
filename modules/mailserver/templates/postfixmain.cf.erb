@@ -23,7 +23,6 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 local_recipient_maps = proxy:unix:passwd.byname $alias_maps
 
-smtpd_client_restrictions = reject_unknown_client_hostname
 smtpd_helo_required = yes
 smtpd_helo_restrictions = reject_invalid_helo_hostname
 smtpd_sender_restrictions = reject_unknown_sender_domain
