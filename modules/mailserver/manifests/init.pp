@@ -65,8 +65,8 @@ class mailserver($domain='baagi.org', $user='bhaisaab',
         user     => root,
         unless   => "ls /etc/opendkim/${domain}",
         command  => "mkdir -p /etc/opendkim && cd /etc/opendkim && \
-                     opendkim-genkey -r -h rsa-sha256 -d ${domain} -s ${domain} && \
-                     chown opendkim:opendkim * && chmod u=rw,go-rwx * && cat ${domain}.txt"
+                     opendkim-genkey -r -h rsa-sha256 -d ${domain} -s mail && \
+                     chown opendkim:opendkim * && chmod u=rw,go-rwx * && cat mail.txt"
     }
 
     # Enable opendkim service
